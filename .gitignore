@@ -14,3 +14,7 @@ apod/__pycache__/
 *.zip*
 Archive.zip
 venv/
+.venv/
+__pycache__
+.pytest_cache/
+.ruff_cache/

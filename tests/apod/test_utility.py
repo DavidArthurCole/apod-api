@@ -1,30 +1,31 @@
 #!/bin/sh/python
-# coding= utf-8 
-import unittest
-from apod import utility 
+# coding= utf-8
 import logging
+import unittest
+
+from apod import utility
 
 logging.basicConfig(level=logging.DEBUG)
 
 from datetime import datetime
+
+
 class TestApod(unittest.TestCase):
     """Test the extraction of APOD characteristics."""
-    
-    TEST_DATA = { 
-        'normal page, copyright' :
-        {
+
+    TEST_DATA = {
+        "normal page, copyright": {
             "datetime": datetime(2017, 3, 22),
-            "copyright": 'Robert Gendler',
-            "date": "2017-03-22", 
-            "explanation": "In cosmic brush strokes of glowing hydrogen gas, this beautiful skyscape unfolds across the plane of our Milky Way Galaxy near the northern end of the Great Rift and the center of the constellation Cygnus the Swan. A 36 panel mosaic of telescopic image data, the scene spans about six degrees. Bright supergiant star Gamma Cygni (Sadr) to the upper left of the image center lies in the foreground of the complex gas and dust clouds and crowded star fields. Left of Gamma Cygni, shaped like two luminous wings divided by a long dark dust lane is IC 1318 whose popular name is understandably the Butterfly Nebula. The more compact, bright nebula at the lower right is NGC 6888, the Crescent Nebula. Some distance estimates for Gamma Cygni place it at around 1,800 light-years while estimates for IC 1318 and NGC 6888 range from 2,000 to 5,000 light-years.", 
-            "hdurl": "https://apod.nasa.gov/apod/image/1703/Cygnus-New-L.jpg", 
-            "media_type": "image", 
-            "service_version": "v1", 
-            "title": "Central Cygnus Skyscape", 
-            "url": "https://apod.nasa.gov/apod/image/1703/Cygnus-New-1024.jpg", 
+            "copyright": "Robert Gendler",
+            "date": "2017-03-22",
+            "explanation": "In cosmic brush strokes of glowing hydrogen gas, this beautiful skyscape unfolds across the plane of our Milky Way Galaxy near the northern end of the Great Rift and the center of the constellation Cygnus the Swan. A 36 panel mosaic of telescopic image data, the scene spans about six degrees. Bright supergiant star Gamma Cygni (Sadr) to the upper left of the image center lies in the foreground of the complex gas and dust clouds and crowded star fields. Left of Gamma Cygni, shaped like two luminous wings divided by a long dark dust lane is IC 1318 whose popular name is understandably the Butterfly Nebula. The more compact, bright nebula at the lower right is NGC 6888, the Crescent Nebula. Some distance estimates for Gamma Cygni place it at around 1,800 light-years while estimates for IC 1318 and NGC 6888 range from 2,000 to 5,000 light-years.",
+            "hdurl": "https://apod.nasa.gov/apod/image/1703/Cygnus-New-L.jpg",
+            "media_type": "image",
+            "service_version": "v1",
+            "title": "Central Cygnus Skyscape",
+            "url": "https://apod.nasa.gov/apod/image/1703/Cygnus-New-1024.jpg",
         },
-        'newer page, Reprocessing & copyright' :  
-        {
+        "newer page, Reprocessing & copyright": {
             "datetime": datetime(2017, 2, 8),
             "copyright": "Jes�s M.Vargas & Maritxu Poyal",
             "date": "2017-02-08",
@@ -33,10 +34,9 @@ class TestApod(unittest.TestCase):
             "media_type": "image",
             "service_version": "v1",
             "title": "The Butterfly Nebula from Hubble",
-            "url": "https://apod.nasa.gov/apod/image/1702/Butterfly_HubbleVargas_960.jpg"
-        }, 
-        'older page, copyright' :  
-        {
+            "url": "https://apod.nasa.gov/apod/image/1702/Butterfly_HubbleVargas_960.jpg",
+        },
+        "older page, copyright": {
             "datetime": datetime(2015, 11, 15),
             "copyright": "Sean M. Sabatini",
             "date": "2015-11-15",
@@ -45,23 +45,21 @@ class TestApod(unittest.TestCase):
             "media_type": "image",
             "service_version": "v1",
             "title": "Leonids Over Monument Valley",
-            "url": "https://apod.nasa.gov/apod/image/1511/leonidsmonuments_sabatini_960.jpg"
-        }, 
-        'older page, copyright #2' :  
-        {
+            "url": "https://apod.nasa.gov/apod/image/1511/leonidsmonuments_sabatini_960.jpg",
+        },
+        "older page, copyright #2": {
             "datetime": datetime(2013, 3, 11),
-            # this illustrates problematic, but still functional parsing of the copyright 
-            "copyright": 'Martin RietzeAlien Landscapes on Planet Earth',
+            # this illustrates problematic, but still functional parsing of the copyright
+            "copyright": "Martin RietzeAlien Landscapes on Planet Earth",
             "date": "2013-03-11",
             "explanation": "Why does a volcanic eruption sometimes create lightning? Pictured above, the Sakurajima volcano in southern Japan was caught erupting in early January. Magma bubbles so hot they glow shoot away as liquid rock bursts through the Earth's surface from below.  The above image is particularly notable, however, for the lightning bolts caught near the volcano's summit.  Why lightning occurs even in common thunderstorms remains a topic of research, and the cause of volcanic lightning is even less clear. Surely, lightning bolts help quench areas of opposite but separated electric charges. One hypothesis holds that catapulting magma bubbles or volcanic ash are themselves electrically charged, and by their motion create these separated areas. Other volcanic lightning episodes may be facilitated by charge-inducing collisions in volcanic dust. Lightning is usually occurring somewhere on Earth, typically over 40 times each second.",
             "hdurl": "https://apod.nasa.gov/apod/image/1303/volcano_reitze_1280.jpg",
             "media_type": "image",
             "service_version": "v1",
             "title": "Sakurajima Volcano with Lightning",
-            "url": "https://apod.nasa.gov/apod/image/1303/volcano_reitze_960.jpg"
-        }, 
-        'older page, no copyright' :  
-        {
+            "url": "https://apod.nasa.gov/apod/image/1303/volcano_reitze_960.jpg",
+        },
+        "older page, no copyright": {
             "datetime": datetime(1998, 6, 19),
             "date": "1998-06-19",
             "copyright": None,
@@ -70,10 +68,9 @@ class TestApod(unittest.TestCase):
             "media_type": "image",
             "service_version": "v1",
             "title": "Good Morning Mars",
-            "url": "https://apod.nasa.gov/apod/image/9806/tharsis_mgs.jpg"
+            "url": "https://apod.nasa.gov/apod/image/9806/tharsis_mgs.jpg",
         },
-        'older page, no copyright, #2' :  
-        {
+        "older page, no copyright, #2": {
             "datetime": datetime(2012, 8, 30),
             "date": "2012-08-30",
             "copyright": None,
@@ -82,29 +79,25 @@ class TestApod(unittest.TestCase):
             "media_type": "image",
             "service_version": "v1",
             "title": "Apollo 11 Landing Site Panorama",
-            "url": "https://apod.nasa.gov/apod/image/1208/a11pan1040226lftsm600.jpg"
+            "url": "https://apod.nasa.gov/apod/image/1208/a11pan1040226lftsm600.jpg",
         },
     }
-    
+
     def _test_harness(self, test_title, data):
-        
-        print ("Testing "+test_title)
-               
+        print("Testing " + test_title)
+
         # make the call
-        values = utility.parse_apod(data['datetime'])
+        values = utility.parse_apod(data["datetime"])
+
+        if not isinstance(values, dict):
+            self.fail("API call did not return a dictionary")
 
         # Test returned properties
-        for prop in values.keys(): 
+        for prop in values.keys():
             if prop == "copyright":
-                print(str(values['copyright']))
-            self.assertEqual(values[prop], data[prop], "Test of property: "+prop)
-        
-        
+                print(str(values["copyright"]))
+            self.assertEqual(values[prop], data[prop], "Test of property: " + prop)
+
     def test_apod_characteristics(self):
-        
         for page_type in TestApod.TEST_DATA.keys():
-            self._test_harness(page_type, TestApod.TEST_DATA[page_type]) 
-        
-        
-        
-        
+            self._test_harness(page_type, TestApod.TEST_DATA[page_type])
