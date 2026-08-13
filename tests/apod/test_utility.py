@@ -7,7 +7,9 @@ from apod import utility
 
 logging.basicConfig(level=logging.DEBUG)
 
-from datetime import datetime
+from datetime import date, datetime
+
+from bs4 import BeautifulSoup
 
 
 class TestApod(unittest.TestCase):
@@ -101,3 +103,31 @@ class TestApod(unittest.TestCase):
     def test_apod_characteristics(self):
         for page_type in TestApod.TEST_DATA.keys():
             self._test_harness(page_type, TestApod.TEST_DATA[page_type])
+
+
+class TestDateFromSoup(unittest.TestCase):
+    """Test date extraction from the undated astropix.html page."""
+
+    def _soup_for(self, date_line):
+        return BeautifulSoup(
+            "<html><body><center><p>\n\n{}\n<br>\n</center></body></html>".format(
+                date_line
+            ),
+            "html.parser",
+        )
+
+    def test_date_line_with_leading_whitespace(self):
+        today = date.today()
+        date_line = "  {} {} {}".format(today.year, today.strftime("%B"), today.day)
+
+        self.assertEqual(
+            utility._date(self._soup_for(date_line)), today.strftime("%Y-%m-%d")
+        )
+
+    def test_date_line_without_leading_whitespace(self):
+        today = date.today()
+        date_line = "{} {} {}".format(today.year, today.strftime("%B"), today.day)
+
+        self.assertEqual(
+            utility._date(self._soup_for(date_line)), today.strftime("%Y-%m-%d")
+        )

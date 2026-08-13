@@ -315,6 +315,7 @@ def _date(soup):
     LOG.debug("getting the date from soup data.")
     _today = datetime.date.today()
     for line in soup.text.split("\n"):
+        line = line.strip()
         today_year = str(_today.year)
         yesterday_year = str((_today - datetime.timedelta(days=1)).year)
         # Looks for the first line that starts with the current year.
